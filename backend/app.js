@@ -1,10 +1,15 @@
 import express from 'express'
 import connect from './src/config/connection.js';
 import mechanicRoutes from "./src/routes/mechanic.routes.js"
+import cors from 'cors'
 
 const app = express();
 
 app.use(express.json())
+
+app.use(cors({
+    origin: 'http://localhost:3000'
+}));
 
 const PORT = process.env.PORT || 8080;
 
