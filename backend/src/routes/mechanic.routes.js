@@ -7,5 +7,6 @@ const app = express.Router()
 const mechanic = new MecanicoController()
 
 app.post("/create-mech", mechanic.createMechanic);
+app.delete("/delete-mech/:id", mechanic.deleteMechanic);
 
 export default app;
