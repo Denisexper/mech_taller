@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt';
 import mechanic from "../models/mecanico.models.js";
+import { generateToken } from '../utils/jwt.js';
 
 
 class MecanicoController {
@@ -12,9 +13,12 @@ class MecanicoController {
 
             const mc = await mechanic.create({name, lastName, email, password: haspassword});
 
+            const token = generateToken({id: mechanic._id, name: mechanic.name, lastName: mechanic.lastName, email: mechanic.email, password: mechanic.password});
+
             res.status(200).send({
                 message: "Mecanico creado con exito",
-                mc
+                mc,
+                token
                 
             })
         } catch (error) {
