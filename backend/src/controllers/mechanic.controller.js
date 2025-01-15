@@ -26,6 +26,59 @@ class MecanicoController {
 
     }
 
+    async getMechanics(req, res) {
+        try {
+            const mc = await mechanic.find();
+            res.status(200).send({
+                message: "Mecanicos obtenidos con exito",
+                mc
+            })
+        } catch (error) {
+            res.status(500).send({
+                message: "Error al obtener los mecanicos",
+                error: error.message
+            })
+        }
+    }
+
+    async getMechanic(req, res) {
+        try {
+            const { id } = req.params;
+
+            const mc = await mechanic.findById(id);
+
+            res.status(200).send({
+                message: "Mecanico obtenido con exito",
+                mc
+            })
+        } catch (error) {
+            res.status(500).send({
+                message: "Error al obtener el mecanico",
+                error: error.message
+            })
+        }
+    }
+
+    async updateMechanic(req, res) {
+        try {
+            const { id } = req.params;
+
+            const { name, lastName, email, password } = req.body;
+
+            const mc = await mechanic.findByIdAndUpdate(id, {name, lastName, email, password}, {new: true})
+
+            res.status(200).send({
+                message: "Mecanico actualizado con exito",
+                mc
+            })
+        } catch (error) {
+            res.status(500).send({
+                message: "Error al actualizar el mecanico",
+                error: error.message
+            })
+        }
+    }
+
     async deleteMechanic(req, res) {
         try {
             const { id } = req.params;
