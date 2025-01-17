@@ -8,7 +8,7 @@
   ],
   "scripts": {
     "install": "npm install --workspaces",
-    "start": "npm run start:backend & npm run start:frontend",
+    "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
     "start:frontend": "npm --workspace frontend run start",
     "start:backend": "npm --workspace backend run start",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -16,5 +16,8 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
 }
