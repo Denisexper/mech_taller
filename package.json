@@ -1,0 +1,20 @@
+{
+  "name": "mech_taller",
+  "version": "1.0.0",
+  "main": "index.js",
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "scripts": {
+    "install": "npm install --workspaces",
+    "start": "npm run start:backend & npm run start:frontend",
+    "start:frontend": "npm --workspace frontend run start",
+    "start:backend": "npm --workspace backend run start",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
