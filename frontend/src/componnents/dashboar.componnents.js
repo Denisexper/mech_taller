@@ -40,6 +40,27 @@ function MechList() {
         navigate("/create")
     }
 
+    const handleDetele = async (id) => {
+        try {
+            const response = await fetch(`http://localhost:8080/api/delete-mech/${id}`, {
+                method: 'DELETE',
+            });
+            if(!response.ok){
+                throw new Error('Failed to delete mech')
+
+            }
+
+            setMechs(mechs.filter(item => item._id !== id))
+
+            toast.success("Mech deleted successfully")
+
+        } catch (error) {
+            console.error('Error', error)
+            
+            toast.success('Failed to delete mech')
+        }
+    }
+
 
     return (
         
@@ -65,7 +86,7 @@ function MechList() {
                                 <td className="py-2 px-4 border">{mech.email}</td>
                                 <td className="py-2 px-4 border flex space-x-2">
                                     <button className="bg-blue-500 text-white px-3 py-1 rounded">Update</button>
-                                    <button className="bg-red-500 text-white px-3 py-1 rounded">Delete</button>
+                                    <button onClick={() => handleDetele(mech._id)} className="bg-red-500 text-white px-3 py-1 rounded">Delete</button>
                                     <button className="bg-teal-500 text-white px-3 py-1 rounded">View</button>
                                 </td>
                             </tr>
