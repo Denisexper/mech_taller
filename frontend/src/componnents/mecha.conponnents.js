@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
+import { Toaster, toast } from "sonner";
 
 function CreateMech() {
     const [formData, setFormData] = useState({
@@ -34,20 +34,10 @@ function CreateMech() {
             const data = await response.json();
             console.log(data)
             if(response.ok) {
-                Swal.fire({
-                    title: "Mechanico creado con exito",
-                    text: "El mecanico ha sido creado con exito",
-                    icon: "success",
-                    confirmButtonText: "Accept"
-                })
+                toast.success("mecanico creado con exito");
                 navigate("/dashboard");
             } else {
-                Swal.fire({
-                    title: "Error al crear el mecanico",
-                    text: "El mecanico no ha sido creado con exito",
-                    icon: "error",
-                    confirmButtonText: "Accept"
-                })
+                toast.success("error creando el mecanico")
             }
         } catch (error) {
             console.error("error", error)
@@ -56,6 +46,7 @@ function CreateMech() {
 
     return (
         <div className="flex justify-center items-center min-h-screen bg-gray-100">
+            <Toaster />
             <div className="w-full max-w-md p-8 space-y-6 bg-white shadow-lg rounded-lg">
                 <h2 className="text-center text-2xl font-bold text-gray-700">
                     Crear Mecánico

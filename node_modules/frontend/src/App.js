@@ -7,8 +7,8 @@ function App() {
     <Router>
       <div>
         <Routes>
-          <Route path="/" element={<CreateMech />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/create" element={<CreateMech />} />
         </Routes>
       </div>
     </Router>

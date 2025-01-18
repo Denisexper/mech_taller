@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from "react";
+import { Toaster, toast } from "sonner";
+
 
 function MechList() {
     const [mechs, setMechs] = useState([]);
     const [error, setError] = useState(null);
 
+
     useEffect(() => {
+
+        /* const token = localStorage.getItem('token') */
 
         fetch("http://localhost:8080/api/get-mechs", {
             method: 'GET',
@@ -18,18 +23,22 @@ function MechList() {
                 return res.json();
             })
             .then(data => {
-                console.log(data)
-                if (Array.isArray(data.mechs)) {
-                    setMechs(data.mechs);
+                console.log(data);
+                
+                if (Array.isArray(data.mc)) {
+                    setMechs(data.mc);
                 } else {
-                    throw new Error('Invalid response format');
+                    toast.success("invalid response")
                 }
             })
             .catch(err => setError(err.message));
     }, []);
 
+
     return (
+        
         <div className="container mx-auto px-4 py-8">
+            < Toaster />
             <h1 className="text-2xl font-bold mb-4">Mechanics List</h1>
             <button className="mb-4 bg-blue-500 text-white px-4 py-2 rounded">Add Mechanic</button>
             <table className="min-w-full bg-white border">
@@ -44,7 +53,7 @@ function MechList() {
                 <tbody>
                     {mechs.length > 0 ? (
                         mechs.map((mech) => (
-                            <tr key={mech.id}>
+                            <tr key={mech._id}>
                                 <td className="py-2 px-4 border">{mech.name}</td>
                                 <td className="py-2 px-4 border">{mech.lastName}</td>
                                 <td className="py-2 px-4 border">{mech.email}</td>
