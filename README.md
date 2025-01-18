@@ -1,4 +1,3 @@
-## root folder run 
 
 ```http
   npm install
