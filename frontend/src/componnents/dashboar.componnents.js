@@ -40,7 +40,12 @@ function MechList() {
         navigate("/create")
     }
 
-    const handleDetele = async (id) => {
+    const handleUpdate = () => {
+        navigate("/update")
+    }
+
+
+    const handleDelete = async (id) => {
         try {
             const response = await fetch(`http://localhost:8080/api/delete-mech/${id}`, {
                 method: 'DELETE',
@@ -85,8 +90,8 @@ function MechList() {
                                 <td className="py-2 px-4 border">{mech.lastName}</td>
                                 <td className="py-2 px-4 border">{mech.email}</td>
                                 <td className="py-2 px-4 border flex space-x-2">
-                                    <button className="bg-blue-500 text-white px-3 py-1 rounded">Update</button>
-                                    <button onClick={() => handleDetele(mech._id)} className="bg-red-500 text-white px-3 py-1 rounded">Delete</button>
+                                    <button onClick={handleUpdate} className="bg-blue-500 text-white px-3 py-1 rounded">Update</button>
+                                    <button onClick={() => handleDelete(mech._id)} className="bg-red-500 text-white px-3 py-1 rounded">Delete</button>
                                     <button className="bg-teal-500 text-white px-3 py-1 rounded">View</button>
                                 </td>
                             </tr>
