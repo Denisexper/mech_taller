@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Toaster, toast } from "sonner";
+import swal from "sweetalert2";
 
 function CreateMech() {
     const [formData, setFormData] = useState({
@@ -34,8 +35,12 @@ function CreateMech() {
             const data = await response.json();
             console.log(data)
             if(response.ok) {
-                toast.success("mecanico creado con exito");
-                navigate("/dashboard");
+                swal.fire({
+                    title: "Mechanic Created Successfully",
+                    icon: "success",
+                    confirmButtonText: "Agree"
+                })
+                navigate("/");
             } else {
                 toast.success("error creando el mecanico")
             }
@@ -82,7 +87,7 @@ function CreateMech() {
                             type="text"
                             id="lastName"
                             name="lastName"
-                            value={formData.lasName}
+                            value={formData.lastName}
                             onChange={handleChange}
                             className="w-full mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
                             placeholder="Ingresa el apellido"

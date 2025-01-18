@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Toaster, toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 
 function MechList() {
     const [mechs, setMechs] = useState([]);
     const [error, setError] = useState(null);
+    const  navigate = useNavigate();
 
 
     useEffect(() => {
@@ -34,13 +36,17 @@ function MechList() {
             .catch(err => setError(err.message));
     }, []);
 
+    const handleAdd = () => {
+        navigate("/create")
+    }
+
 
     return (
         
         <div className="container mx-auto px-4 py-8">
             < Toaster />
             <h1 className="text-2xl font-bold mb-4">Mechanics List</h1>
-            <button className="mb-4 bg-blue-500 text-white px-4 py-2 rounded">Add Mechanic</button>
+            <button onClick={handleAdd} className="mb-4 bg-blue-500 text-white px-4 py-2 rounded">Add Mechanic</button>
             <table className="min-w-full bg-white border">
                 <thead>
                     <tr>
