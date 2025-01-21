@@ -11,12 +11,13 @@ function MechList() {
 
     useEffect(() => {
 
-        /* const token = localStorage.getItem('token') */
+        const token = localStorage.getItem('token')
 
         fetch("http://localhost:8080/api/get-mechs", {
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
             },
             credentials: 'include',
         })
