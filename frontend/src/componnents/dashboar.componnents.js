@@ -17,7 +17,7 @@ function MechList() {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
+                'Authorization': `${token}`
             },
             credentials: 'include',
         })
@@ -27,6 +27,7 @@ function MechList() {
             })
             .then(data => {
                 console.log(data);
+                console.log(token)
                 
                 if (Array.isArray(data.mc)) {
                     setMechs(data.mc);
@@ -38,7 +39,7 @@ function MechList() {
     }, []);
 
     const handleAdd = () => {
-        navigate("/create")
+        navigate("/")
     }
 
     const handleUpdate = () => {

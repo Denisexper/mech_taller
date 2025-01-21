@@ -38,12 +38,14 @@ function CreateMech() {
             const data = await response.json();
             console.log(data)
             if(response.ok) {
+                localStorage.setItem('token', data.token);
+                
                 swal.fire({
                     title: "Mechanic Created Successfully",
                     icon: "success",
                     confirmButtonText: "Agree"
                 })
-                navigate("/");
+                navigate("/dashboard");
             } else {
                 toast.success("error creando el mecanico")
             }
