@@ -13,6 +13,11 @@ function MechList() {
 
         const token = localStorage.getItem('token')
 
+        if(!token) {
+            console.log("no token")
+            navigate("/")
+        }
+
         fetch("http://localhost:8080/api/get-mechs", {
             method: 'GET',
             headers: {
@@ -36,7 +41,7 @@ function MechList() {
                 }
             })
             .catch(err => setError(err.message));
-    }, []);
+    }, [navigate]);
 
     const handleAdd = () => {
         navigate("/")
