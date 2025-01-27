@@ -47,8 +47,8 @@ function MechList() {
         navigate("/")
     }
 
-    const handleUpdate = () => {
-        navigate("/update")
+    const handleUpdate = (id) => {
+        navigate(`/update/${id}`)
     }
 
 
@@ -97,7 +97,7 @@ function MechList() {
                                 <td className="py-2 px-4 border">{mech.lastName}</td>
                                 <td className="py-2 px-4 border">{mech.email}</td>
                                 <td className="py-2 px-4 border flex space-x-2">
-                                    <button onClick={handleUpdate} className="bg-blue-500 text-white px-3 py-1 rounded">Update</button>
+                                    <button onClick={() => handleUpdate(mech._id)} className="bg-blue-500 text-white px-3 py-1 rounded">Update</button>
                                     <button onClick={() => handleDelete(mech._id)} className="bg-red-500 text-white px-3 py-1 rounded">Delete</button>
                                     <button className="bg-teal-500 text-white px-3 py-1 rounded">View</button>
                                 </td>
