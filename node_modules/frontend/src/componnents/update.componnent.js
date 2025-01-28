@@ -10,14 +10,14 @@ function EditMech() {
         email: "",
         password: "",
     });
-    
+
+    const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
-    const { id } = useParams(); // Obtenemos el ID del mecánico desde la URL
+    const { id } = useParams();
 
     useEffect(() => {
-        console.log(id)
-        // Llamada para obtener los datos del mecánico y rellenar el formulario
         const fetchMechData = async () => {
+            console.log(id)
             try {
                 const response = await fetch(`http://localhost:8080/api/get-mech/${id}`);
                 const data = await response.json();
@@ -25,16 +25,19 @@ function EditMech() {
 
                 if (response.ok) {
                     setFormData({
-                        name: data.name,
-                        lastName: data.lastName,
-                        email: data.email,
-                        password: "", // No es recomendable traer la contraseña en muchos casos
+                        name: data.name || "",
+                        lastName: data.lastName || "",
+                        email: data.email || "",
+                        password: data.password ||"",
                     });
+                    
+                    setLoading(false);
                 } else {
                     toast.error("Error fetching mechanic data");
                 }
             } catch (error) {
                 console.error("Error fetching mechanic:", error);
+                toast.error("Error fetching mechanic data");
             }
         };
 
@@ -47,15 +50,15 @@ function EditMech() {
             ...formData,
             [name]: value,
         });
+        console.log(formData)
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("Updated Form Data: ", formData);
 
         try {
             const response = await fetch(`http://localhost:8080/api/update-mech/${id}`, {
-                method: "PUT", // Usamos PUT o PATCH para actualizar
+                method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
                 },
@@ -63,22 +66,26 @@ function EditMech() {
             });
             const data = await response.json();
             if (response.ok) {
+                console.log(data)
                 swal.fire({
                     title: "Mechanic Updated Successfully",
                     icon: "success",
                     confirmButtonText: "Agree",
                 });
-                
-                console.log(data)
+
                 navigate("/dashboard");
             } else {
                 toast.error("Error updating the mechanic");
             }
         } catch (error) {
             console.error("Error", error);
+            toast.error("Error updating the mechanic");
         }
     };
 
+    if (loading) {
+        return <div className="text-center">Loading...</div>;
+    }
 
     return (
         <div className="flex justify-center items-center min-h-screen bg-gray-100">
@@ -97,13 +104,10 @@ function EditMech() {
                         </label>
                         <input
                             type="text"
-                            
                             name="name"
                             value={formData.name}
                             onChange={handleChange}
                             className="w-full mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-                            
-                            required
                         />
                     </div>
 
@@ -116,13 +120,10 @@ function EditMech() {
                         </label>
                         <input
                             type="text"
-                            
                             name="lastName"
                             value={formData.lastName}
                             onChange={handleChange}
                             className="w-full mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-                            
-                            required
                         />
                     </div>
 
@@ -135,13 +136,10 @@ function EditMech() {
                         </label>
                         <input
                             type="email"
-                            
                             name="email"
                             value={formData.email}
                             onChange={handleChange}
                             className="w-full mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-                            
-                            required
                         />
                     </div>
 
@@ -154,13 +152,10 @@ function EditMech() {
                         </label>
                         <input
                             type="password"
-                            
                             name="password"
                             value={formData.password}
                             onChange={handleChange}
                             className="w-full mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-                            
-                            required
                         />
                     </div>
 
