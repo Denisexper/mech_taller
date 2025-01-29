@@ -4,6 +4,9 @@ import { Toaster, toast } from "sonner";
 import swal from "sweetalert2";
 
 function EditMech() {
+    const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
+    const { id } = useParams();
     const [formData, setFormData] = useState({
         name: "",
         lastName: "",
@@ -11,32 +14,30 @@ function EditMech() {
         password: "",
     });
 
-    const [loading, setLoading] = useState(true);
-    const navigate = useNavigate();
-    const { id } = useParams();
+    
 
     useEffect(() => {
         const fetchMechData = async () => {
-            console.log(id)
+            console.log("Id del mecanico", id);
             try {
                 const response = await fetch(`http://localhost:8080/api/get-mech/${id}`);
                 const data = await response.json();
-                console.log(data)
+                console.log("Informacion mecanico", data);
 
                 if (response.ok) {
                     setFormData({
                         name: data.name || "",
                         lastName: data.lastName || "",
                         email: data.email || "",
-                        password: data.password ||"",
+                        password: data.password || "",
                     });
-                    
                     setLoading(false);
                 } else {
                     toast.error("Error fetching mechanic data");
                 }
             } catch (error) {
                 console.error("Error fetching mechanic:", error);
+                
                 toast.error("Error fetching mechanic data");
             }
         };
@@ -50,7 +51,7 @@ function EditMech() {
             ...formData,
             [name]: value,
         });
-        console.log(formData)
+        console.log(formData); 
     };
 
     const handleSubmit = async (e) => {
@@ -66,7 +67,7 @@ function EditMech() {
             });
             const data = await response.json();
             if (response.ok) {
-                console.log(data)
+                console.log(data);
                 swal.fire({
                     title: "Mechanic Updated Successfully",
                     icon: "success",
@@ -86,7 +87,7 @@ function EditMech() {
     if (loading) {
         return <div className="text-center">Loading...</div>;
     }
-
+    
     return (
         <div className="flex justify-center items-center min-h-screen bg-gray-100">
             <Toaster />
@@ -98,19 +99,20 @@ function EditMech() {
                     <div>
                         <label
                             htmlFor="name"
-                            className="block text-sm font-medium text-gray-600"
+                            className="block text-sm font-medium text-gray-600" 
                         >
                             Nombre
                         </label>
                         <input
                             type="text"
+                            id="name"
                             name="name"
                             value={formData.name}
                             onChange={handleChange}
                             className="w-full mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
                         />
                     </div>
-
+    
                     <div>
                         <label
                             htmlFor="lastName"
@@ -120,13 +122,14 @@ function EditMech() {
                         </label>
                         <input
                             type="text"
+                            id="lastName"
                             name="lastName"
                             value={formData.lastName}
                             onChange={handleChange}
                             className="w-full mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
                         />
                     </div>
-
+    
                     <div>
                         <label
                             htmlFor="email"
@@ -136,13 +139,14 @@ function EditMech() {
                         </label>
                         <input
                             type="email"
+                            id="email"
                             name="email"
                             value={formData.email}
                             onChange={handleChange}
                             className="w-full mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
                         />
                     </div>
-
+    
                     <div>
                         <label
                             htmlFor="password"
@@ -152,13 +156,15 @@ function EditMech() {
                         </label>
                         <input
                             type="password"
+                            id="password"
                             name="password"
+                            autoComplete="new-password"
                             value={formData.password}
                             onChange={handleChange}
                             className="w-full mt-1 p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
                         />
                     </div>
-
+    
                     <div>
                         <button
                             type="submit"
@@ -171,6 +177,7 @@ function EditMech() {
             </div>
         </div>
     );
+    
 }
 
 export default EditMech;
